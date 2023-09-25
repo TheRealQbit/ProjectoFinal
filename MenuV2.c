@@ -24,7 +24,6 @@ void inputMode(){
             valid = true;
         }
     }
-    modeChanger();
 }
 void modeChanger(){
     switch (mode)
@@ -49,4 +48,5 @@ void modeChanger(){
 int main(){
     printf("1. Quit \n2. Collect \n3. Show Data\n4. Select Best \n5. Delete Net \n6. Sort \n7. Export \n8. Import \n9. Display \n10. Display all \n\rSelect a mode: ");
     inputMode();
+    modeChanger();
 }
