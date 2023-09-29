@@ -3,34 +3,58 @@
 #include <stdbool.h>
 int mode;
 
-void inputMode(){
+void inputMode()
+{
     bool valid = false;
     char c;
-    while (!valid) {
+    while (!valid)
+    {
         scanf("%d", &mode);
         while (c != '\n')
         {
             c = getchar();
         }
-        if ((mode > 10) || (mode < 1)){
+        if ((mode > 10) || (mode < 1))
+        {
             printf("Please, introduce a valid mode: ");
         }
         else if ((mode == 3) || (mode == 4) || (mode == 5) || (mode == 6) || (mode == 7) || (mode == 8))
         {
             printf("This mode is not available. Please, introduce a valid mode: ");
         }
-        
-        else{
-            valid = true;
-        }
+
+        modeChanger();
     }
-    modeChanger();
+    
 }
-void modeChanger(){
+void modeChanger()
+{
     switch (mode)
     {
     case 1:
-        printf("Youve choosen mode quit");
+        char input = '\0';
+
+        while (1)
+        {
+            printf("Are you sure you want to exit? ");
+            scanf("%c", &input);
+
+            if (input == 'y' || input == 'n') {
+                break;
+            }
+
+            printf("Please select a valid option\n");
+            if (input != '\n') {
+
+            }
+        }
+
+        if (input == 'y')
+        {
+            printf("Goodbye!\n");
+            exit(0);
+        }
+
         break;
     case 2:
         printf("Youve choosen mode collect");
@@ -46,7 +70,8 @@ void modeChanger(){
     }
 }
 
-int main(){
+int main()
+{
     printf("1. Quit \n2. Collect \n3. Show Data\n4. Select Best \n5. Delete Net \n6. Sort \n7. Export \n8. Import \n9. Display \n10. Display all \n\rSelect a mode: ");
     inputMode();
 }
