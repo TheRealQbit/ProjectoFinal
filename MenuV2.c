@@ -32,6 +32,7 @@ void modeChanger()
     switch (mode)
     {
     case 1:
+    
         char input = '\0';
 
         while (1)
@@ -54,10 +55,36 @@ void modeChanger()
             printf("Goodbye!\n");
             exit(0);
         }
-
+           
         break;
     case 2:
-        printf("Youve choosen mode collect");
+        int input2 = '\0';
+
+        printf("What cell do you want to collect? (1 - 21):");
+        scanf("%d",&input2);
+
+    // Verificar que el número esté dentro del rango válido
+    if (input2 < 1 || input2 > 21) {
+        printf("Número fuera del rango válido.\n");
+        return 1;
+    }
+
+    // Construir el nombre del archivo en función del número ingresado
+    char cells[21];  // Asumimos que el nombre del archivo no excederá los 50 caracteres
+    snprintf(cells, sizeof(cells), "mi_carpeta/archivo%d.txt", input2);
+
+    // Intentar abrir el archivo
+    FILE *file = fopen(cells  , "r");
+    if (file == NULL) {
+        perror("Error when opening the file");
+        return 1;
+    } else {
+        printf("The file '%s' was correctely opened.\n", cells  );
+        // Realiza operaciones de lectura/escritura en el archivo si es necesario
+        fclose(file);
+    }
+
+
         break;
     case 9:
         printf("Youve choosen mode display");
