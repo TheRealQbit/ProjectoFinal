@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-int mode;
 
+int mode;
+char cells[22];  // Asumimos que el nombre del archivo no excederá los 50 caracteres
 void inputMode()
 {
     bool valid = false;
@@ -37,7 +38,7 @@ void modeChanger()
 
         while (1)
         {
-            printf("Are you sure you want to exit? ");
+            printf("Are you sure you want to exit? [y/N]:");
             scanf("%c", &input);
 
             if (input == 'y' || input == 'n') {
@@ -58,31 +59,7 @@ void modeChanger()
            
         break;
     case 2:
-        int input2 = '\0';
-
-        printf("What cell do you want to collect? (1 - 21):");
-        scanf("%d",&input2);
-
-    // Verificar que el número esté dentro del rango válido
-    if (input2 < 1 || input2 > 21) {
-        printf("Número fuera del rango válido.\n");
-        return 1;
-    }
-
-    // Construir el nombre del archivo en función del número ingresado
-    char cells[21];  // Asumimos que el nombre del archivo no excederá los 50 caracteres
-    snprintf(cells, sizeof(cells), "mi_carpeta/archivo%d.txt", input2);
-
-    // Intentar abrir el archivo
-    FILE *file = fopen(cells  , "r");
-    if (file == NULL) {
-        perror("Error when opening the file");
-        return 1;
-    } else {
-        printf("The file '%s' was correctely opened.\n", cells  );
-        // Realiza operaciones de lectura/escritura en el archivo si es necesario
-        fclose(file);
-    }
+        mode2();
 
 
         break;
@@ -97,9 +74,42 @@ void modeChanger()
     }
 }
 
+void mode2(){
+    int input2 = '\0';
+    bool valid = false;    
+    printf("What cell do you want to collect? (1 - 21):");
+    while(!valid){
+        scanf("%d",&input2);
+            // Verificar que el número esté dentro del rango válido
+        if (input2 < 1 || input2 > 21) {
+        printf("Número fuera del rango válido.\n");        
+        }
+        else{
+            valid = true;
+        }
+    } 
+    snprintf(cells, sizeof(cells), "cells/info_cell_%d.txt", input2);
+        FILE *file = fopen(cells  , "r");
+    if (file == NULL) {
+        perror("Error when opening the file");
+    } else {
+        printf("The file '%s' was correctely opened.\n", cells  );
+        // Realiza operaciones de lectura/escritura en el archivo si es necesario
+        for(int i = 0; i < 10; i++){
+            char line[256];
+            fgets(line, sizeof(line), file);
+            printf("%s", line);
+        }
+        fclose(file);
+    }
+
+    // Intentar abrir el archivo
+
+}
 int main()
 {
     printf("1. Quit \n2. Collect \n3. Show Data\n4. Select Best \n5. Delete Net \n6. Sort \n7. Export \n8. Import \n9. Display \n10. Display all \n\rSelect a mode: ");
     inputMode();
     modeChanger();
 }
+
