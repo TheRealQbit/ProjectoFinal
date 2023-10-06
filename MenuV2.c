@@ -7,6 +7,9 @@
 #define MAX_FILENAME_LENGTH 100
 #define SIZE 500
 
+
+void modeChanger(int mode);
+
 typedef struct dataCells { 
     //The struct is for the data from the file
     int numCell;
