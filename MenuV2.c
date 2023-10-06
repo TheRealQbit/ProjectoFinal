@@ -11,22 +11,23 @@
 void modeChanger(int mode);
 
 typedef struct dataCells { 
-    //The struct is for the data from the file
     int numCell;
-    char address;
-    char ESSID;
-    char mode;
+    char address[20];
+    char name[10];
+    char mode[10];
     int ch;
-    char key;
-    char Quality;
-    int level;
-    float frq;
+    char key[4];
+    int num1;
+    int num2;
+    float num3;
+    int frq;
 } dataCells;
 
 dataCells savedCells[NUM_FILES];
 
 void mode1();
 void mode2(dataCells cellData[]);
+int getLastArrayElement(dataCells cellData[]);
 void mode9();
 void mode10(dataCells cellData[]);
 /// ====================================================================================================
@@ -34,11 +35,12 @@ void mode10(dataCells cellData[]);
 /// ====================================================================================================
 void inputMode()
 {
-    int mode;
+    int mode = 0;
     bool valid = false;
     char c;
     while (!valid)
-    {
+    {        
+        printf("\nOption: ");
         scanf("%d", &mode);
         while (c != '\n')
         {
@@ -69,7 +71,7 @@ void inputMode()
         break;
     case 9:
         printf("Mode 9 selected.\n");
-        mode9();
+        mode9(&savedCells);
         break;
     case 10:
         printf("Mode 10 selected.\n");
@@ -80,6 +82,13 @@ void inputMode()
         inputMode();
         break;
     }
+}
+int getLastArrayElement(dataCells cellData[]){
+    int i = 0;
+    while(cellData[i].numCell != 0){
+        i++;
+    }
+    return i;
 }
 /// ====================================================================================================
 /// ============================================ MODES ================================================
@@ -92,7 +101,7 @@ void inputMode()
         scanf("%c", &input);
 
         if (input == 'y' || input == 'n' || input == 'Y' || input == 'N') {
-            break;
+            inputMode();
         }
         printf("Please select a valid option\n");
     }
@@ -127,15 +136,17 @@ void mode2(dataCells cellData[]) {
             }
             dataCells data;  
             data.numCell = i;
+            
+            j = getLastArrayElement(cellData);
 
-            while (fscanf(file, "Cell %d\n Address: %c\nESSID:%s\n Mode:%s\n Channel:%d\n Encryption key:%s\n Quality=%c\n Frequency:%f GHz Signal level=%d dBm\n", &data.numCell, data.address, data.ESSID, data.mode, &data.ch, data.key, &data.Quality, &data.Quality, &data.frq, &data.level) != EOF) {            
-                printf("Network read from %s (added to position %d of the array)\n", filename, j);
-                /*
-                printf("%d %s %s %s %d %s %d/%f %d\n",
-                    data.numCell, data.address, data.ESSID, data.mode, data.ch, data.key, data.Quality, data.frq, data.level);*/
-                j++;
+            while(fscanf(file, "Cell %d Address: %s ESSID:%s Mode:%s Channel:%d Encryption key:%s Quality=%d/%d Frequency:%f GHz Signal level=%d dBm\n", &data.numCell, data.address, data.name, data.mode, &data.ch, data.key, &data.num1, &data.num2, &data.num3, &data.frq) != EOF) {
+                printf("Network read from info_cell_1.txt (added to position %d of the array)\n", j);
+                printf("%d %s %s %s %d %s %d/%d %f %d\n",
+                       data.numCell, data.address, data.name, data.mode, data.ch, data.key, data.num1, data.num2, data.num3, data.frq);
+                cellData[j] = data;
+                j++;                
             }
-            cellData[i - 1] = data;
+            
             fclose(file);
 
 
@@ -143,19 +154,19 @@ void mode2(dataCells cellData[]) {
 
         printf("Do you want to add another access point? [y/N]: ");
         scanf(" %c", &c); // Note the space before %c to skip leading whitespace
+        if(c== 'y' || c== 'Y'){
+            modeChanger(2);
+        }
+        else if(c== 'n' || c== 'N'){
+            inputMode();
+        }
+        else{
+            printf("Please, introduce a valid option: ");
+        }
     }while(c != 'y' || c != 'Y' || c != 'n' || c != 'N');
-    
-    if(c== 'y' || c== 'Y'){
-        modeChanger(2);
-    }
-    else if(c== 'n' || c== 'N'){
-        inputMode();
-    }
-    else{
-        printf("Please, introduce a valid option: ");
-    }
 }
- void mode9(){
+
+ void mode9(dataCells cellData[]){
     bool valid = false;
     int i;
     char c;
@@ -169,12 +180,11 @@ void mode2(dataCells cellData[]) {
             valid = true;
         }
     }   
-    if(savedCells[i].numCell != 0){
-        printf("%d %c %c %c %d %c %d/%d %d\n",
-            savedCells[i].numCell, savedCells[i].address, savedCells[i].ESSID, savedCells[i].mode, savedCells[i].ch, savedCells[i].key, savedCells[i].Quality, savedCells[i].frq, savedCells[i].level);
-    }
-    else{
-        printf("There is no information about this cell.\n");
+    for(int j = 0; j< sizeof(cellData); j++){
+        if(cellData[j].numCell != 0 && cellData[j].numCell == i){
+            printf("Cell %d: %s %s %s %d %s %d/%d %f GHz %d dBm\n",
+                cellData[j].numCell, cellData[j].address, cellData[j].name, cellData[j].mode, cellData[j].ch, cellData[j].key, cellData[j].num1, cellData[j].num2, cellData[j].num3, cellData[j].frq);
+        }
     }
     valid = false;
     while (!valid)
@@ -194,8 +204,10 @@ void mode2(dataCells cellData[]) {
 }
  void mode10(dataCells cellData[]){
     for(int i = 0; i< sizeof(cellData); i++){
-        printf("%d %c %c %c %d %c %d %d\n",
-            cellData[i].numCell, cellData[i].address, cellData[i].ESSID, cellData[i].mode, cellData[i].ch, cellData[i].key, cellData[i].Quality, cellData[i].frq, cellData[i].level);
+        if(cellData[i].numCell != 0){
+            printf("Cell %d: %s %s %s %d %s %d/%d %f GHz %d dBm\n",
+                cellData[i].numCell, cellData[i].address, cellData[i].name, cellData[i].mode, cellData[i].ch, cellData[i].key, cellData[i].num1, cellData[i].num2, cellData[i].num3, cellData[i].frq);
+        }
     }
 }
 int main(){
@@ -210,7 +222,6 @@ int main(){
     printf("[8]wificollector_import\n");
     printf("[9]wificollector_display\n");
     printf("[10]wificollector_display_all\n");
-    printf("\nOption: ");
     inputMode();
     return 0;
 }
