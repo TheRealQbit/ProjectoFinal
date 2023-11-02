@@ -96,24 +96,17 @@ int getLastArrayElement(dataCells cellData[]){
     return i;
 }
 void isArrayBigEnough(dataCells cellData[], int i){
-    int j = 0;
-    dataCells *TempArray = (dataCells *)malloc(sizeof(dataCells) * sizeof(cellData));
-    while (cellData[i].numCell != 0)
-    {
-        j++;
-        i++;
-    }
-    if(j<2 && j != 0){
-        for(int k = 0; k < sizeof(*cellData); k++){
-            TempArray[k] = cellData[k];
+    if(sizeof(cellData)-i < 2 && i != 0){
+        dataCells *TempArray = (dataCells *)realloc(cellData, sizeof(dataCells) * (sizeof(*cellData) + 5));
+
+        if (TempArray == NULL) {
+            // Handle realloc failure
+            free(cellData);  // Release the original array
+            printf("Memory allocation failed.\n");
+            return;
         }
-        savedCells = (dataCells *)realloc(savedCells, sizeof(dataCells) * 5);
-        for(int k = 0; k < sizeof(*cellData); k++){
-            cellData[k] = TempArray[k];
-        }
+        cellData = TempArray;  // Update the array with the newly allocated memory
     }
-    free(TempArray);
-    printf("Added 5 positions to the array\n");
 }
 /// ====================================================================================================
 /// ============================================ MODES ================================================
@@ -239,13 +232,9 @@ void mode9(dataCells cellData[]){
     }
 }
 void mode10(dataCells cellData[]){
-    for (int i = 0; i < sizeof(dataCells *); i++)
-    {
-        if (cellData[i].numCell != 0)
-        {
-            printf("Cell %d: %s %s %s %d %s %d/%d %f GHz %d dBm\n",
+    for(int i = 0; i < getLastArrayElement(cellData); i++){
+                    printf("Cell %d: %s %s %s %d %s %d/%d %f GHz %d dBm \n",
                    cellData[i].numCell, cellData[i].address, cellData[i].name, cellData[i].mode, cellData[i].ch, cellData[i].key, cellData[i].num1, cellData[i].num2, cellData[i].num3, cellData[i].frq);
-        }
     }
 }
 int main(){
@@ -261,6 +250,9 @@ int main(){
     printf("[8]wificollector_import\n");
     printf("[9]wificollector_display\n");
     printf("[10]wificollector_display_all\n");
+    printf("\n");
+    printf("%d\n", savedCells[0].numCell);
+
     inputMode();
     return 0;
 }
