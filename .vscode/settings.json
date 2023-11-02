@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "FINAL.C": "cpp"
+        "inputmode.h": "c",
+        "menuv2.c": "cpp",
+        "stdbool.h": "c",
+        "string.h": "c",
+        "arraytools.c": "cpp"
     }
 }

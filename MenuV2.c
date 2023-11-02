@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include "tools/structs.h"
+#include "tools/arrayTools.c"
+#include "tools/input.c"
 
 #define NUM_FILES 21
 #define MAX_FILENAME_LENGTH 100
@@ -9,54 +12,25 @@
 
 void modeChanger(int mode);
 
-typedef struct dataCells{
-    int numCell;
-    char address[20];
-    char name[10];
-    char mode[10];
-    int ch;
-    char key[4];
-    int num1;
-    int num2;
-    float num3;
-    int frq;
-} dataCells;
-dataCells *savedCells; // Declare a global pointer
+/// @brief Struct that contains the data of a cell
+/// @param numCell Number of the cell
+/// @param address Address of the cell
+/// @param name Name of the cell
+/// @param mode Mode of the cell
+/// @param ch Channel of the cell
+/// @param key Key of the cell
+/// @param num1 First number of the cell
+/// @param num2 Second number of the cell
+/// @param num3 Third number of the cell
+/// @param frq Frequency of the cell
 
+// Declaration of a pointer to a dataCells struct
+dataCells *savedCells; 
 
-void mode1();
-void mode2(dataCells cellData[]);
-void mode2DYNMEM(dataCells cellData[]);
-int getLastArrayElement(dataCells cellData[]);
-void mode9();
-void mode10(dataCells cellData[]);
 /// ====================================================================================================
 /// ============================================ FUNCTIONS =============================================
 /// ====================================================================================================
-void inputMode(){
-    int mode = 0;
-    bool valid = false;
-    char c;
-    while (!valid)
-    {
-        printf("\nOption: ");
-        scanf("%d", &mode);
-        while (c != '\n')
-        {
-            c = getchar();
-        }
-        if ((mode > 10) || (mode < 1))
-        {
-            printf("Please, introduce a valid mode: ");
-        }
-        else if ((mode == 3) || (mode == 4) || (mode == 6) || (mode == 7) || (mode == 8))
-        {
-            printf("This mode is not available. Please, introduce a valid mode: ");
-        }
 
-        modeChanger(mode);
-    }
-}
 void modeChanger(int mode){
     switch (mode)
     {
@@ -83,33 +57,9 @@ void modeChanger(int mode){
         inputMode();
         break;
     }
-
-
-}
-int getLastArrayElement(dataCells cellData[]){
-    int i = 0;
-    while (cellData[i].numCell != 0)
-    {
-        i++;
-    }
-    isArrayBigEnough(cellData, i);
-    return i;
-}
-void isArrayBigEnough(dataCells cellData[], int i){
-    if(sizeof(cellData)-i < 2 && i != 0){
-        dataCells *TempArray = (dataCells *)realloc(cellData, sizeof(dataCells) * (sizeof(*cellData) + 5));
-
-        if (TempArray == NULL) {
-            // Handle realloc failure
-            free(cellData);  // Release the original array
-            printf("Memory allocation failed.\n");
-            return;
-        }
-        cellData = TempArray;  // Update the array with the newly allocated memory
-    }
 }
 /// ====================================================================================================
-/// ============================================ MODES ================================================
+/// ============================================ MODES =================================================
 /// ====================================================================================================
 void mode1(){
     char input;
@@ -187,35 +137,6 @@ void mode2(dataCells cellData[]){
         }
     } while (c != 'y' || c != 'Y' || c != 'n' || c != 'N');
 }
-
-void mode5(dataCells cellData[], int* count) {
-    char searchName[MAX_FILENAME_LENGTH];
-    int foundIndex = -1;
-
-    printf("Indicate the ESSID (use double quotes): ");
-    scanf("%s", searchName);
-
-    for (int i = 0; i < *count; i++) {
-        if (strcmp(searchName, cellData[i].name) == 0) {
-            foundIndex = i;
-            break; // Exit the loop when the ESSID is found
-        }
-    }
-
-    if (foundIndex != -1) {
-        // Shift elements to eliminate the cell
-        for (int i = foundIndex; i < *count - 1; i++) {
-            cellData[i] = cellData[i + 1];
-        }
-        (*count)--;
-
-        printf("ESSID \"%s\" has been deleted.\n", searchName);
-    } else {
-        printf("ESSID \"%s\" not found in the data.\n", searchName);
-    }
-}
-
-
 void mode9(dataCells cellData[]){
     bool valid = false;
     int i;
@@ -266,6 +187,9 @@ void mode10(dataCells cellData[]){
                    cellData[i].numCell, cellData[i].address, cellData[i].name, cellData[i].mode, cellData[i].ch, cellData[i].key, cellData[i].num1, cellData[i].num2, cellData[i].num3, cellData[i].frq);
     }
 }
+/// ====================================================================================================
+/// ============================================ MAIN ==================================================
+/// ====================================================================================================
 int main(){
     savedCells = (dataCells *)malloc(sizeof(dataCells) * 5);
     printf("[2023] SUCEM S.L. Wifi Collector by Alberto Villarroel & Yago Martínez\n\n");
@@ -280,7 +204,6 @@ int main(){
     printf("[9]wificollector_display\n");
     printf("[10]wificollector_display_all\n");
     printf("\n");
-    printf("%d\n", savedCells[0].numCell);
 
     inputMode();
     return 0;
