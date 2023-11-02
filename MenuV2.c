@@ -50,7 +50,7 @@ void inputMode()
         {
             printf("Please, introduce a valid mode: ");
         }
-        else if ((mode == 3) || (mode == 4) || (mode == 5) || (mode == 6) || (mode == 7) || (mode == 8))
+        else if ((mode == 3) || (mode == 4) || (mode == 6) || (mode == 7) || (mode == 8))
         {
             printf("This mode is not available. Please, introduce a valid mode: ");
         }
@@ -77,11 +77,16 @@ void modeChanger(int mode)
         printf("Mode 10 selected.\n");
         mode10(&savedCells);
         break;
+    case 5:
+        printf("Mode 5 was selected .\n");
+        mode2(&savedCells);
     default:
         printf("Please, introduce a valid mode: ");
         inputMode();
         break;
     }
+
+
 }
 int getLastArrayElement(dataCells cellData[])
 {
@@ -108,7 +113,7 @@ void mode1()
         {
             break;
         }
-        
+
         printf("Please select a valid option\n");
     }
     if (input == 'y')
@@ -177,7 +182,10 @@ void mode2(dataCells cellData[])
     } while (c != 'y' || c != 'Y' || c != 'n' || c != 'N');
 }
 
- void mode9(dataCells cellData[]){
+
+
+void mode9(dataCells cellData[])
+{
     bool valid = false;
     int i;
     char c;

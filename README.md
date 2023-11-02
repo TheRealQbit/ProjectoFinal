@@ -1,4 +1,5 @@
-# Proyecto en contra del hombre cabra
-    I hate 🐐(me ponen de mala ostia)
-    Puto hombre cabra me pone de muy mala ostia cuando me mira joder
+# Project: WiFi-Collector
+    Authors: Alberto Villarroel & Yago Martínez.
+    Course: 2023/2024 
+    Subject: Systems Architecture.
 
