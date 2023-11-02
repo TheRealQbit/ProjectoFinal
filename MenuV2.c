@@ -9,8 +9,7 @@
 
 void modeChanger(int mode);
 
-typedef struct dataCells
-{
+typedef struct dataCells{
     int numCell;
     char address[20];
     char name[10];
@@ -22,19 +21,19 @@ typedef struct dataCells
     float num3;
     int frq;
 } dataCells;
+dataCells *savedCells; // Declare a global pointer
 
-dataCells savedCells[NUM_FILES];
 
 void mode1();
 void mode2(dataCells cellData[]);
+void mode2DYNMEM(dataCells cellData[]);
 int getLastArrayElement(dataCells cellData[]);
 void mode9();
 void mode10(dataCells cellData[]);
 /// ====================================================================================================
 /// ============================================ FUNCTIONS =============================================
 /// ====================================================================================================
-void inputMode()
-{
+void inputMode(){
     int mode = 0;
     bool valid = false;
     char c;
@@ -58,8 +57,7 @@ void inputMode()
         modeChanger(mode);
     }
 }
-void modeChanger(int mode)
-{
+void modeChanger(int mode){
     switch (mode)
     {
     case 1:
@@ -67,19 +65,19 @@ void modeChanger(int mode)
         break;
     case 2:
         printf("Mode 2 selected.\n");
-        mode2(&savedCells);
+        mode2(savedCells);
         break;
     case 9:
         printf("Mode 9 selected.\n");
-        mode9(&savedCells);
+        mode9(savedCells);
         break;
     case 10:
         printf("Mode 10 selected.\n");
-        mode10(&savedCells);
-        break;
+        mode10(savedCells);
+        break;        
     case 5:
         printf("Mode 5 was selected .\n");
-        mode2(&savedCells);
+        mode2(savedCells);
     default:
         printf("Please, introduce a valid mode: ");
         inputMode();
@@ -88,20 +86,39 @@ void modeChanger(int mode)
 
 
 }
-int getLastArrayElement(dataCells cellData[])
-{
+int getLastArrayElement(dataCells cellData[]){
     int i = 0;
     while (cellData[i].numCell != 0)
     {
         i++;
     }
+    isArrayBigEnough(cellData, i);
     return i;
+}
+void isArrayBigEnough(dataCells cellData[], int i){
+    int j = 0;
+    dataCells *TempArray = (dataCells *)malloc(sizeof(dataCells) * sizeof(cellData));
+    while (cellData[i].numCell != 0)
+    {
+        j++;
+        i++;
+    }
+    if(j<2 && j != 0){
+        for(int k = 0; k < sizeof(*cellData); k++){
+            TempArray[k] = cellData[k];
+        }
+        savedCells = (dataCells *)realloc(savedCells, sizeof(dataCells) * 5);
+        for(int k = 0; k < sizeof(*cellData); k++){
+            cellData[k] = TempArray[k];
+        }
+    }
+    free(TempArray);
+    printf("Added 5 positions to the array\n");
 }
 /// ====================================================================================================
 /// ============================================ MODES ================================================
 /// ====================================================================================================
-void mode1()
-{
+void mode1(){
     char input;
 
     while (true)
@@ -122,14 +139,10 @@ void mode1()
         exit(0);
     }
 }
-void mode2(dataCells cellData[])
-{
+void mode2(dataCells cellData[]){
     char c;
-
-    do
-    {
+    do{
         int i = 0, j = 0;
-        int array_size[NUM_FILES];
         printf("What cell do you want to collect? (1-21):\n");
         scanf("%d", &i);
         if (i > 21 || i < 1)
@@ -181,11 +194,7 @@ void mode2(dataCells cellData[])
         }
     } while (c != 'y' || c != 'Y' || c != 'n' || c != 'N');
 }
-
-
-
-void mode9(dataCells cellData[])
-{
+void mode9(dataCells cellData[]){
     bool valid = false;
     int i;
     char c;
@@ -202,7 +211,7 @@ void mode9(dataCells cellData[])
             valid = true;
         }
     }
-    for (int j = 0; j < sizeof(cellData); j++)
+    for (int j = 0; j < sizeof(*cellData); j++)
     {
         if (cellData[j].numCell != 0 && cellData[j].numCell == i)
         {
@@ -229,8 +238,7 @@ void mode9(dataCells cellData[])
         }
     }
 }
-void mode10(dataCells cellData[])
-{
+void mode10(dataCells cellData[]){
     for (int i = 0; i < sizeof(dataCells *); i++)
     {
         if (cellData[i].numCell != 0)
@@ -240,8 +248,8 @@ void mode10(dataCells cellData[])
         }
     }
 }
-int main()
-{
+int main(){
+    savedCells = (dataCells *)malloc(sizeof(dataCells) * 5);
     printf("[2023] SUCEM S.L. Wifi Collector by Alberto Villarroel & Yago Martínez\n\n");
     printf("\n[1]wificollector_quit\n");
     printf("[2]wificollector_collect\n");
