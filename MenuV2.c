@@ -187,6 +187,35 @@ void mode2(dataCells cellData[]){
         }
     } while (c != 'y' || c != 'Y' || c != 'n' || c != 'N');
 }
+
+void mode5(dataCells cellData[], int* count) {
+    char searchName[MAX_FILENAME_LENGTH];
+    int foundIndex = -1;
+
+    printf("Indicate the ESSID (use double quotes): ");
+    scanf("%s", searchName);
+
+    for (int i = 0; i < *count; i++) {
+        if (strcmp(searchName, cellData[i].name) == 0) {
+            foundIndex = i;
+            break; // Exit the loop when the ESSID is found
+        }
+    }
+
+    if (foundIndex != -1) {
+        // Shift elements to eliminate the cell
+        for (int i = foundIndex; i < *count - 1; i++) {
+            cellData[i] = cellData[i + 1];
+        }
+        (*count)--;
+
+        printf("ESSID \"%s\" has been deleted.\n", searchName);
+    } else {
+        printf("ESSID \"%s\" not found in the data.\n", searchName);
+    }
+}
+
+
 void mode9(dataCells cellData[]){
     bool valid = false;
     int i;
