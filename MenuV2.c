@@ -3,13 +3,14 @@
 #include <stdbool.h>
 #include <string.h>
 #include "tools/structs.h"
+#include "tools/definitions.h"
 #include "tools/arrayTools.c"
 #include "tools/input.c"
-
-#define NUM_FILES 21
-#define MAX_FILENAME_LENGTH 100
-#define SIZE 500
-#define MAX_ACCESS_POINTS 100 // Adjust this as needed
+#include "mode/mode1.c"
+#include "mode/mode2.c"
+//#include "mode/mode5.c"
+#include "mode/mode9.c"
+#include "mode/mode10.c"
 
 
 void modeChanger(int mode);
@@ -28,7 +29,7 @@ void modeChanger(int mode);
 
 // Declaration of a pointer to a dataCells struct
 dataCells *savedCells; 
-
+int *count;
 /// ====================================================================================================
 /// ============================================ FUNCTIONS =============================================
 /// ====================================================================================================
@@ -53,7 +54,7 @@ void modeChanger(int mode){
         break;        
     case 5:
         printf("Mode 5 was selected .\n");
-        case5(&savedCells, &count);
+        //mode5(&savedCells, count);
     default:
         printf("Please, introduce a valid mode: ");
         inputMode();
@@ -139,7 +140,7 @@ void mode2(dataCells** savedCells){
         }
     } while (c != 'y' || c != 'Y' || c != 'n' || c != 'N');
 }
-void case5(dataCells** savedCells, int *count);
+void mode5(dataCells** savedCells, int *count);
 /*void mode5(dataCells** cellData, int* count) {
     char searchName[MAX_FILENAME_LENGTH];
     int foundIndex = 0;
@@ -230,8 +231,8 @@ void mode10(dataCells**savedCells){
 /// ====================================================================================================
 int main(){
     dataCells* savedCells = (dataCells *)malloc(5* sizeof(dataCells));
-   dataCells dataCells[MAX_ACCESS_POINTS];
-   int count = 0;
+    dataCells dataCells[MAX_ACCESS_POINTS];
+    int* count = 0;
     printf("[2023] SUCEM S.L. Wifi Collector by Alberto Villarroel & Yago Martínez\n\n");
     printf("\n[1]wificollector_quit\n");
     printf("[2]wificollector_collect\n");

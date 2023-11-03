@@ -1,12 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include "tools/structs.h"
-#include "tools/arrayTools.c"
-#include "tools/input.c"
-#include "MenuV2.c"
-
 void mode1(){
     char input;
 

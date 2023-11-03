@@ -1,15 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include "tools/structs.h"
-#include "tools/arrayTools.c"
-#include "tools/input.c"
-#include "MenuV2.c"
 
-void case5(dataCells **savedCells, int* count)
+#include "../tools/definitions.h"
+void mode5(dataCells **savedCells, int* count)
 {
-
+    int count = 0;
     char searchName[MAX_FILENAME_LENGTH];
     bool validInput = false;
     int foundCount = 0;
