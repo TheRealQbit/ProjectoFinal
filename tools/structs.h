@@ -1,4 +1,4 @@
-typedef struct dataCells{
+struct dataCells{
     int numCell;
     char address[20];
     char name[10];
@@ -9,4 +9,4 @@ typedef struct dataCells{
     int num2;
     float num3;
     int frq;
-} dataCells;
+};

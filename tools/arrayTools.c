@@ -1,15 +1,15 @@
-int getLastArrayElement(dataCells cellData[]){
+int getLastArrayElement(struct dataCells **cellData){
     int i = 0;
-    while (cellData[i].numCell != 0)
+    while (cellData[i]->numCell != 0)
     {
         i++;
     }
     isArrayBigEnough(cellData, i);
     return i;
 }
-void isArrayBigEnough(dataCells cellData[], int i){
+void isArrayBigEnough(struct dataCells **cellData, int i){
     if(sizeof(cellData)-i < 2 && i != 0){
-        dataCells *TempArray = (dataCells *)realloc(cellData, sizeof(dataCells) * (sizeof(*cellData) + 5));
+       struct dataCells *TempArray = (struct dataCells *)realloc(cellData, sizeof(struct dataCells) * (sizeof(*cellData) + 5));
 
         if (TempArray == NULL) {
             // Handle realloc failure
