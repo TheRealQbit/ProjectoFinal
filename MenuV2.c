@@ -9,6 +9,8 @@
 #define NUM_FILES 21
 #define MAX_FILENAME_LENGTH 100
 #define SIZE 500
+#define MAX_ACCESS_POINTS 100 // Adjust this as needed
+
 
 void modeChanger(int mode);
 
@@ -39,19 +41,19 @@ void modeChanger(int mode){
         break;
     case 2:
         printf("Mode 2 selected.\n");
-        mode2(savedCells);
+        mode2(&savedCells);
         break;
     case 9:
         printf("Mode 9 selected.\n");
-        mode9(savedCells);
+        mode9(&savedCells);
         break;
     case 10:
         printf("Mode 10 selected.\n");
-        mode10(savedCells);
+        mode10(&savedCells);
         break;        
     case 5:
         printf("Mode 5 was selected .\n");
-        mode2(savedCells);
+        case5(&savedCells);
     default:
         printf("Please, introduce a valid mode: ");
         inputMode();
@@ -61,7 +63,7 @@ void modeChanger(int mode){
 /// ====================================================================================================
 /// ============================================ MODES =================================================
 /// ====================================================================================================
-void mode1(){
+/*void mode1(){
     char input;
 
     while (true)
@@ -82,7 +84,7 @@ void mode1(){
         exit(0);
     }
 }
-void mode2(dataCells cellData[]){
+void mode2(dataCells** savedCells){
     char c;
     do{
         int i = 0, j = 0;
@@ -133,11 +135,47 @@ void mode2(dataCells cellData[]){
         }
         else
         {
-            printf("Please, introduce a valid option: ");
+            printf("Please, introduce a valid option (y/n): ");
         }
     } while (c != 'y' || c != 'Y' || c != 'n' || c != 'N');
 }
-void mode9(dataCells cellData[]){
+void case5(dataCells** savedCells, int *count);
+/*void mode5(dataCells** cellData, int* count) {
+    char searchName[MAX_FILENAME_LENGTH];
+    int foundIndex = 0;
+
+    printf("Indicate the ESSID (use double quotes): ");
+    scanf("%s", searchName);
+
+    for (int i = 0; i < *count; i++) {
+        if (strcmp(searchName, cellData[i]->name) == 0) {
+            foundIndex = i;
+            break; // Exit the loop when the ESSID is found
+        }
+    }
+
+    if (foundIndex != -1) {
+        // Delete the access point file here, if applicable
+        char filename[MAX_FILENAME_LENGTH];
+        sprintf(filename, "access_points/%s.txt", searchName); // Adjust the path as needed
+
+        if (remove(filename) == 0) {
+            // Shift elements to eliminate the cell
+            for (int i = foundIndex; i < *count - 1; i++) {
+                cellData[i] = cellData[i + 1];
+            }
+            (*count)--;
+
+            printf("ESSID \"%s\" has been deleted.\n", searchName);
+        } else {
+            printf("Failed to delete ESSID \"%s\". Please check file permissions or existence.\n", searchName);
+        }
+    } else {
+        printf("ESSID \"%s\" not found in the data.\n", searchName);
+    }
+}*/
+
+/*void mode9(dataCells** savedCells){
     bool valid = false;
     int i;
     char c;
@@ -181,17 +219,18 @@ void mode9(dataCells cellData[]){
         }
     }
 }
-void mode10(dataCells cellData[]){
+void mode10(dataCells**savedCells){
     for(int i = 0; i < getLastArrayElement(cellData); i++){
                     printf("Cell %d: %s %s %s %d %s %d/%d %f GHz %d dBm \n",
                    cellData[i].numCell, cellData[i].address, cellData[i].name, cellData[i].mode, cellData[i].ch, cellData[i].key, cellData[i].num1, cellData[i].num2, cellData[i].num3, cellData[i].frq);
     }
-}
+}*/
 /// ====================================================================================================
 /// ============================================ MAIN ==================================================
 /// ====================================================================================================
 int main(){
-    savedCells = (dataCells *)malloc(sizeof(dataCells) * 5);
+    dataCells* savedCells = (dataCells *)malloc(5* sizeof(dataCells));
+   dataCells dataCells[MAX_ACCESS_POINTS];
     printf("[2023] SUCEM S.L. Wifi Collector by Alberto Villarroel & Yago Martínez\n\n");
     printf("\n[1]wificollector_quit\n");
     printf("[2]wificollector_collect\n");
@@ -206,5 +245,6 @@ int main(){
     printf("\n");
 
     inputMode();
+    free(savedCells); 
     return 0;
 }
