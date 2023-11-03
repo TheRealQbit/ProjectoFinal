@@ -53,7 +53,7 @@ void modeChanger(int mode){
         break;        
     case 5:
         printf("Mode 5 was selected .\n");
-        case5(&savedCells);
+        case5(&savedCells, &count);
     default:
         printf("Please, introduce a valid mode: ");
         inputMode();
@@ -231,6 +231,7 @@ void mode10(dataCells**savedCells){
 int main(){
     dataCells* savedCells = (dataCells *)malloc(5* sizeof(dataCells));
    dataCells dataCells[MAX_ACCESS_POINTS];
+   int count = 0;
     printf("[2023] SUCEM S.L. Wifi Collector by Alberto Villarroel & Yago Martínez\n\n");
     printf("\n[1]wificollector_quit\n");
     printf("[2]wificollector_collect\n");
