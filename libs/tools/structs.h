@@ -10,3 +10,8 @@ typedef struct dataCells{
     float num3;
     int frq;
 } dataCells;
+
+typedef struct Cell{
+    struct dataCells data;
+    struct Cell *next;
+} Cell;

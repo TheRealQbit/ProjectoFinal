@@ -1,9 +1,12 @@
 {
     "files.associations": {
+        "*.c": "c",
         "inputmode.h": "c",
         "menuv2.c": "cpp",
         "stdbool.h": "c",
         "string.h": "c",
-        "arraytools.c": "cpp"
+        "arraytools.c": "cpp",
+        "structs.h": "c",
+        "stdio.h": "c"
     }
 }
