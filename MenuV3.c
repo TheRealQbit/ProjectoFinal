@@ -10,29 +10,55 @@ int input(){
     valid = false;
     while(!valid){
         printf("Select an option: ");
-        scanf("%d", &mode);
-        if(mode > 0 && mode < 11){
+        scanf("%d", mode);
+        if(&mode > 0 && &mode < 11){
             valid = true;
         }else{
             printf("Invalid option\n");
         }
     }
-    free(valid);
-    return mode;
-    free(mode);
+    return *mode;
+}
+void modeChanger(int mode){
+    switch (mode)
+    {
+    case 1:
+        /* code */
+        break;
+    case 2:
+        /* code */
+        break;
+    case 3:
+        /* code */
+        break;
+    case 4:
+        /* code */
+        break;
+    case 5:
+        /* code */
+        break;
+    case 6:
+        /* code */
+        break;
+    default:
+        break;
+    }
 }
 int main(){
-    printf("[2023] SUCEM S.L. Wifi Collector by Alberto Villarroel & Yago Martínez\n\n");
-    printf("\n[1]wificollector_quit\n");
-    printf("[2]wificollector_collect\n");
-    printf("[3]wificollector_show_data_one_network\n");
-    printf("[4]wificollector_select_best\n");
-    printf("[5]wificollector_delete_net\n");
-    printf("[6]wificollector_sort\n");
-    printf("[7]wificollector_export\n");
-    printf("[8]wificollector_import\n");
-    printf("[9]wificollector_display\n");
-    printf("[10]wificollector_display_all\n");
-    printf("\n");
-    return 0;
+    do{
+        printf("[2023] SUCEM S.L. Wifi Collector by Alberto Villarroel & Yago Martínez\n\n");
+        printf("\n[1]wificollector_quit\n");
+        printf("[2]wificollector_collect\n");
+        printf("[3]wificollector_show_data_one_network\n");
+        printf("[4]wificollector_select_best\n");
+        printf("[5]wificollector_delete_net\n");
+        printf("[6]wificollector_sort\n");
+        printf("[7]wificollector_export\n");
+        printf("[8]wificollector_import\n");
+        printf("[9]wificollector_display\n");
+        printf("[10]wificollector_display_all\n");
+        printf("\n");
+        modeChanger(input());
+        return 0;
+    }while(input() != 1);
 }
