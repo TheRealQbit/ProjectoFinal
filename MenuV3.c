@@ -4,7 +4,7 @@
 #include "./libs/tools/structs.h"
 
 int input(){
-    int mode = malloc(sizeof(int));
+    int *mode = (int*) malloc(sizeof(int));
     mode = 0;
     bool valid = malloc(sizeof(bool));
     valid = false;
