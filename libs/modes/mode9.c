@@ -1,4 +1,4 @@
-void mode9(dataCells** savedCells){
+void mode9(DataCells** savedCells){
     bool valid = false;
     int i;
     char c;

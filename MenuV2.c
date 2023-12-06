@@ -9,7 +9,7 @@
 #include <ctype.h>
 
 
-//void modeChanger(int mode, int *contador, struct dataCells **savedCells);
+//void modeChanger(int mode, int *contador, struct DataCells **savedCells);
 
 /// @brief Struct that contains the data of a cell
 /// @param numCell Number of the cell
@@ -23,8 +23,8 @@
 /// @param num3 Third number of the cell
 /// @param frq Frequency of the cell
 
-// Declaration of a pointer to a dataCells struct
-//dataCells *savedCells; 
+// Declaration of a pointer to a DataCells struct
+//DataCells *savedCells; 
 //int *contador;
 /// ====================================================================================================
 /// ============================================ FUNCTIONS =============================================
@@ -61,7 +61,7 @@ void mode1(bool *exit){
         }
     } while (1);
 }
-void mode2(struct dataCells** savedCells, int *contador){//this is mode 2 that will print the data of all the cells
+void mode2(struct DataCells** savedCells, int *contador){//this is mode 2 that will print the data of all the cells
     //initializes the variables
     char c;
     int arrSize = 5;
@@ -85,7 +85,7 @@ void mode2(struct dataCells** savedCells, int *contador){//this is mode 2 that w
                 fprintf(stderr, "Could not open the file.\n");
                 return;
             }
-            struct dataCells info;
+            struct DataCells info;
             info.numCell = i;
 
             //here we read the data of the cell (scan)
@@ -95,7 +95,7 @@ void mode2(struct dataCells** savedCells, int *contador){//this is mode 2 that w
                 if (arrSize<=*contador){
                     printf("(Allocating another 5 positions in the dynamic array)\n");
                     arrSize += 5;
-                    *savedCells = (struct dataCells *)realloc(*savedCells, arrSize * sizeof(struct dataCells));//reallocating the memory
+                    *savedCells = (struct DataCells *)realloc(*savedCells, arrSize * sizeof(struct DataCells));//reallocating the memory
                     if (*savedCells == NULL)
                     {
                         fprintf(stderr, "Error: Memory reallocation failed.\n");//to check if it is possible to allocate more memory
@@ -122,7 +122,7 @@ void mode2(struct dataCells** savedCells, int *contador){//this is mode 2 that w
     } while (c == 'y' || c == 'Y');// check the answer of the user
 }
 
-void mode5(struct dataCells **savedCells, int* contador)//this is mode 5 that will erase the access point that is entered.
+void mode5(struct DataCells **savedCells, int* contador)//this is mode 5 that will erase the access point that is entered.
 {
         //initialize variables
     char buscador[MAX_FILENAME_LENGTH];
@@ -173,7 +173,7 @@ void mode5(struct dataCells **savedCells, int* contador)//this is mode 5 that wi
     }
 }
 
-void mode9(struct dataCells** savedCells, int* contador) {//this is mode 9 that will print the data of all the cells
+void mode9(struct DataCells** savedCells, int* contador) {//this is mode 9 that will print the data of all the cells
     char c;
 
     do
@@ -220,7 +220,7 @@ void mode9(struct dataCells** savedCells, int* contador) {//this is mode 9 that 
 }
 
 
-void mode10(struct dataCells** savedCells, int *contador){//this is mode 10 that will print the data of all the cells
+void mode10(struct DataCells** savedCells, int *contador){//this is mode 10 that will print the data of all the cells
     if (*contador > 0)//check if the array is not empty
     {
         printf("Previously collected cells:\n");//
@@ -248,7 +248,7 @@ int main(){
     //initializes the variables
     int mode;  
     bool exit = false;
-    struct dataCells* savedCells = (struct dataCells *)malloc(5* sizeof(struct dataCells));//allocating memory for the dynamic array
+    struct DataCells* savedCells = (struct DataCells *)malloc(5* sizeof(struct DataCells));//allocating memory for the dynamic array
     int contador = 0;
 
 do {//this is the main loop of the program

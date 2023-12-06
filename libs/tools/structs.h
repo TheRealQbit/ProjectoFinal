@@ -1,4 +1,6 @@
-typedef struct dataCells{
+#ifndef DATA_CELLS_H
+#define DATA_CELLS_H
+typedef struct DataCells{
     int numCell;
     char address[20];
     char name[10];
@@ -9,9 +11,11 @@ typedef struct dataCells{
     int num2;
     float num3;
     int frq;
-} dataCells;
+    
+} DataCells;
 
 typedef struct Cell{
-    struct dataCells data;
+    struct DataCells data;
     struct Cell *next;
 } Cell;
+#endif // DATA_CELLS_H

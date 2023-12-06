@@ -1,4 +1,4 @@
-int getLastArrayElement(struct dataCells **cellData){
+int getLastArrayElement(struct DataCells **cellData){
     int i = 0;
     while (cellData[i]->numCell != 0)
     {
@@ -7,9 +7,9 @@ int getLastArrayElement(struct dataCells **cellData){
     isArrayBigEnough(cellData, i);
     return i;
 }
-void isArrayBigEnough(struct dataCells **cellData, int i){
+void isArrayBigEnough(struct DataCells **cellData, int i){
     if(sizeof(cellData)-i < 2 && i != 0){
-       struct dataCells *TempArray = (struct dataCells *)realloc(cellData, sizeof(struct dataCells) * (sizeof(*cellData) + 5));
+       struct DataCells *TempArray = (struct DataCells *)realloc(cellData, sizeof(struct DataCells) * (sizeof(*cellData) + 5));
 
         if (TempArray == NULL) {
             // Handle realloc failure

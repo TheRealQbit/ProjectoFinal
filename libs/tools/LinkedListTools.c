@@ -4,7 +4,7 @@
 /*
  * Create new Cell (using data as input)
  */
-Cell* createCell(struct dataCells data){
+Cell* createCell(struct DataCells data){
 
     Cell *cell = (Cell*)malloc(sizeof(Cell));
     cell->data = data;
@@ -24,10 +24,6 @@ void push(Cell **head, Cell *new_Cell){
 /*
  * Insert Cell at the end
  */
-
-/*
- * Insert Cell at the end
- */
 void append(Cell **head_ref, Cell *new_Cell) {
     // If list is empty, the Cell is inserted at the beginning
     if (*head_ref == NULL) {
@@ -42,7 +38,21 @@ void append(Cell **head_ref, Cell *new_Cell) {
     }
     last->next = new_Cell;
 }
-
+/*
+* Count the amount of cells in the list
+*/    
+int count(Cell *head){
+    int count = 0;
+    Cell *current = head;
+    if(current->next == NULL){
+        return 1;
+    }
+    while(current != NULL){
+        count++;
+        current = current->next;
+    }
+    return count;
+}
 /*
  * Insert Cell after a giving position
  */
@@ -59,7 +69,7 @@ void insert_after(Cell *prev_Cell, Cell *new_Cell) {
 /*
  * Delete Cell by value
  */
-void delete_Cell(Cell **head_ref, struct dataCells key) {
+void delete_Cell(Cell **head_ref, struct DataCells key) {
     Cell *tmp = *head_ref, *prev;
 
     // The Cell to be deleted is the first position
