@@ -4,12 +4,17 @@
 #include "./libs/tools/structs.h"
 
 #include "./libs/modes/mode1.c"
+
 #include "./libs/modes/mode2.c"
-/*
+
 #include "./libs/modes/mode5.c"
+
+#include "./libs/modes/mode7.c"
+
 #include "./libs/modes/mode9.c"
+
 #include "./libs/modes/mode10.c"
-*/
+
 int input(){
     int* mode = (int*) malloc(sizeof(int));
     *mode = 0;
@@ -26,12 +31,12 @@ int input(){
     return *mode;
 }
 int main(){
-    int mode;
+    int mode = 0;
     Cell *head = NULL;
     head = (Cell*) malloc(sizeof(Cell));
     head->next = NULL;
     head->data = *(DataCells*) malloc(sizeof(DataCells));
-
+    printf("%dn", count(head));
     printf("[2023] SUCEM S.L. Wifi Collector by Alberto Villarroel & Yago Martínez\n\n");
     printf("\n[1]wificollector_quit\n");
     printf("[2]wificollector_collect\n");
@@ -54,13 +59,16 @@ int main(){
             mode2(head);
             break;
         case 5:
-            //mode5(savedCells);
+            mode5(head);
+            break;
+        case 7:
+            mode7(head);
             break;
         case 9:
-            //mode9(savedCells);
+            mode9(head);
             break;
         case 10:
-            //mode10(savedCells);
+            mode10(head);
             break;
         default:
             break;

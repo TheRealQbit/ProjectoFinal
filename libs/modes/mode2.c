@@ -5,9 +5,9 @@
 #include "../tools/LinkedListTools.c"
 
 void mode2(Cell **head){
-    char c;
+    char c = 'k';
     do{
-        int i = 0, j = 0;
+        int i = 0;
         printf("What cell do you want to collect? (1-21):\n");
         scanf("%d", &i);
         if (i > 21 || i < 1)
@@ -27,26 +27,23 @@ void mode2(Cell **head){
                 return;
             }
             DataCells data;
-            data.numCell = i;
-
-            j = count(head);
             
             while (fscanf(file, "Cell %d Address: %s ESSID:%s Mode:%s Channel:%d Encryption key:%s Quality=%d/%d Frequency:%f GHz Signal level=%d dBm\n", &data.numCell, data.address, data.name, data.mode, &data.ch, data.key, &data.num1, &data.num2, &data.num3, &data.frq) != EOF)
             {
-                Cell *temp = createCell(data);
-                append(head, &temp);
-                printf("Network read from info_cell_1.txt (added to position %d of the array)\n", j);
+                Cell* tempCell = createCell(data);
+                append(head, tempCell);
+                               
+                printf("Network read from info_cell_1.txt (added to the list)\n");
                 printf("%d %s %s %s %d %s %d/%d %f %d\n",
-                       data.numCell, data.address, data.name, data.mode, data.ch, data.key, data.num1, data.num2, data.num3, data.frq);
-                free(temp); 
-                
+                       tempCell->data.numCell, data.address, data.name, data.mode, data.ch, data.key, data.num1, data.num2, data.num3, data.frq);
+                       
             }
-
+            
             fclose(file);
         }
 
         printf("Do you want to add another access point? [y/N]: ");
-        scanf(" %c", &c); // Note the space before %c to skip leading whitespace
+        scanf("%c", &c);
         if (c == 'y' || c == 'Y')
         {
             mode2(head);

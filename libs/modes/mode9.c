@@ -1,4 +1,4 @@
-void mode9(DataCells** savedCells){
+void mode9(Cell **head){
     bool valid = false;
     int i;
     char c;
@@ -12,17 +12,11 @@ void mode9(DataCells** savedCells){
         }
         else
         {
+            printCellsByNumCell(head, i);
             valid = true;
         }
     }
-    for (int j = 0; j < sizeof(*savedCells); j++)
-    {
-        if ((*savedCells)[j].numCell != 0 && (*savedCells)[j].numCell == i)
-        {
-            printf("Cell %d: %s %s %s %d %s %d/%d %f GHz %d dBm\n",
-                   (*savedCells)[j].numCell, (*savedCells)[j].address, (*savedCells)[j].name, (*savedCells)[j].mode, (*savedCells)[j].ch, (*savedCells)[j].key, (*savedCells)[j].num1, (*savedCells)[j].num2, (*savedCells)[j].num3, (*savedCells)[j].frq);
-        }
-    }
+    
     valid = false;
     while (!valid)
     {
@@ -30,11 +24,11 @@ void mode9(DataCells** savedCells){
         scanf("%c", &c);
         if (c == 'y' || c == 'Y')
         {
-            modeChanger(9);
+            mode9(head);
         }
         else if (c == 'n' || c == 'N')
         {
-            inputMode();
+            break;
         }
         else
         {

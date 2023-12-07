@@ -6,13 +6,12 @@
  */
 Cell* createCell(struct DataCells data){
 
-    Cell *cell = (Cell*)malloc(sizeof(Cell));
+    Cell* cell = (Cell*)malloc(sizeof(Cell));
     cell->data = data;
     cell->next = NULL;
 
     return cell;
 };
-
 /*
  * Insert Cell at the beginning
  */
@@ -47,7 +46,7 @@ int count(Cell *head){
     if(current->next == NULL){
         return 1;
     }
-    while(current != NULL){
+    while(current->next != NULL){
         count++;
         current = current->next;
     }
@@ -69,18 +68,18 @@ void insert_after(Cell *prev_Cell, Cell *new_Cell) {
 /*
  * Delete Cell by value
  */
-void delete_Cell(Cell **head_ref, struct DataCells key) {
+void delete_Cell(Cell **head_ref,  char address[20]) {
     Cell *tmp = *head_ref, *prev;
 
     // The Cell to be deleted is the first position
-    if (tmp != NULL && tmp->data.numCell == key.numCell) {
+    if (tmp != NULL && tmp->data.numCell == address) {
         *head_ref = tmp->next;
         free(tmp);
         return;
     }
 
     // If not, we find the matching Cell (if any)
-    while (tmp != NULL && tmp->data.numCell != key.numCell) {
+    while (tmp != NULL && tmp->data.numCell != address) {
         prev = tmp;
         tmp = tmp->next;
     }
@@ -94,4 +93,30 @@ void delete_Cell(Cell **head_ref, struct DataCells key) {
     // and then, the memory of the matching Cell is released
     prev->next = tmp->next;
     free(tmp);
+}
+Cell* FindCell(Cell *head, char address[20]){
+    Cell *current = head;
+    while(current->data.address != address){
+        current = current->next;
+    }
+    return current;
+}
+void printList(Cell **head){
+    Cell *current = *head;
+    while(current != NULL){
+        printf("%d %s %s %s %d %s %d/%d %f %d\n",
+               current->data.numCell, current->data.address, current->data.name, current->data.mode, current->data.ch, current->data.key, current->data.num1, current->data.num2, current->data.num3, current->data.frq);
+        current = current->next;
+    }
+
+}
+void printCellsByNumCell(Cell **head, int key){
+    Cell *current = *head;
+    while(current != NULL){
+        if(current->data.numCell == key){
+            printf("%d %s %s %s %d %s %d/%d %f %d\n",
+               current->data.numCell, current->data.address, current->data.name, current->data.mode, current->data.ch, current->data.key, current->data.num1, current->data.num2, current->data.num3, current->data.frq);
+        }
+        current = current->next;
+    }
 }

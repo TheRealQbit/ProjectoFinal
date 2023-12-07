@@ -9,6 +9,7 @@ void mode1() {
         scanf(" %c", &input);
 
         if (input == 'y' || input == 'n' || input == 'Y' || input == 'N') {
+            main();
             break;
         }
 
