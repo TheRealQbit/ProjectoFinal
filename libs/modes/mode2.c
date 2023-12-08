@@ -43,7 +43,7 @@ void mode2(Cell **head){
         }
 
         printf("Do you want to add another access point? [y/N]: ");
-        scanf("%c", &c);
+        scanf(" %c", &c);
         if (c == 'y' || c == 'Y')
         {
             mode2(head);
@@ -56,5 +56,5 @@ void mode2(Cell **head){
         {
             printf("Please, introduce a valid option (y/n): ");
         }
-    } while (c != 'y' || c != 'Y' || c != 'n' || c != 'N');
+    } while (c != 'y' && c != 'Y' && c != 'n' && c != 'N');
 }

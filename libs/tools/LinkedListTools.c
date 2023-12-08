@@ -68,18 +68,18 @@ void insert_after(Cell *prev_Cell, Cell *new_Cell) {
 /*
  * Delete Cell by value
  */
-void delete_Cell(Cell **head_ref,  char address[20]) {
+void delete_Cell(Cell **head_ref, char address[20]) {
     Cell *tmp = *head_ref, *prev;
 
     // The Cell to be deleted is the first position
-    if (tmp != NULL && tmp->data.numCell == address) {
+    if (tmp != NULL && strcmp(tmp->data.address, address) == 0) {
         *head_ref = tmp->next;
         free(tmp);
         return;
     }
 
     // If not, we find the matching Cell (if any)
-    while (tmp != NULL && tmp->data.numCell != address) {
+    while (tmp != NULL && strcmp(tmp->data.address, address) != 0) {
         prev = tmp;
         tmp = tmp->next;
     }
@@ -94,6 +94,7 @@ void delete_Cell(Cell **head_ref,  char address[20]) {
     prev->next = tmp->next;
     free(tmp);
 }
+
 Cell* FindCell(Cell *head, char address[20]){
     Cell *current = head;
     while(current->data.address != address){

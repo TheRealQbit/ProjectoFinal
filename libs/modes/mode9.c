@@ -21,7 +21,7 @@ void mode9(Cell **head){
     while (!valid)
     {
         printf("Do you want to print the information of another cell? [y/N]: ");
-        scanf("%c", &c);
+        scanf(" %c", &c);
         if (c == 'y' || c == 'Y')
         {
             mode9(head);

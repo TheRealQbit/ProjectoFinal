@@ -1,6 +1,7 @@
 #include "../tools/structs.h"
 #include "../tools/definitions.h"
 
+
 void mode5(Cell **head)
 {
     Cell *current = *head;
@@ -11,7 +12,7 @@ void mode5(Cell **head)
   
     while (!validInput){
         printf("Enter the ESSID to delete (use double quotes): ");
-        scanf("\"%s\"", searchName);
+        scanf(" %s", searchName);
         printf("You entered: \"%s\"\n", searchName);
         validInput = true;
     }   
