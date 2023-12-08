@@ -8,16 +8,16 @@ void mode1() {
         printf("Are you sure you want to exit? [y/N]: ");
         scanf(" %c", &input);
 
-        if (input == 'y' || input == 'n' || input == 'Y' || input == 'N') {
+        if (input == 'n' || input == 'N' ) {
             main();
-            break;
-        }
-
-        printf("Please select a valid option\n");
+            break;      
     }
 
-    if (input == 'y' || input == 'Y') {
+            else if (input == 'y' || input == 'Y') {
         printf("Goodbye!\n");
         exit(0);
+        break;
+        }else printf("Please select a valid option\n");
     }
+        
 }
